@@ -82,6 +82,39 @@ app.get("/matchdet", async(req, res) => {
       res.send(data)
 });
 
+//Get Standings
+app.get("/stands", async(req, res) => {
+  const auth = new google.auth.GoogleAuth({
+      keyFile: "credentials.json",
+      scopes: "https://www.googleapis.com/auth/spreadsheets",
+    });
+  
+    // Create client instance for aut
+    const client = await auth.getClient();
+  
+    // Instance of Google Sheets API
+    const googleSheets = google.sheets({ version: "v4", auth: client });
+  
+    const spreadsheetId = "1kNZ5NbgjKkNOod6BVQP4DoYGB83Kz7Bfs2ZwqzHICBo";
+  
+    // Read rows from spreadsheet
+    const getRows = await googleSheets.spreadsheets.values.get({
+      auth,
+      spreadsheetId,
+      range: "Standings!A:C",
+    });
+    let data = []
+    for(let i = 1; i<await getRows.data.values.length; i++){
+      let ndata = {
+          tname: getRows.data.values[i][0],
+          score: getRows.data.values[i][1],
+          captain: getRows.data.values[i][2],
+      }
+      data.push(ndata)
+    }
+    res.send(data)
+});
+
 //Get Logos
 app.get("/logos", async(req, res) => {
     const auth = new google.auth.GoogleAuth({
