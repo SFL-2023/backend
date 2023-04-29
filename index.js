@@ -115,7 +115,8 @@ app.get("/stands", async(req, res) => {
           loss: getRows.data.values[i][6],
           gc: getRows.data.values[i][7],
           ga: getRows.data.values[i][8],
-          points: getRows.data.values[i][9],
+          gd: getRows.data.values[i][9],
+          points: getRows.data.values[i][10],
       }
       data.push(ndata)
     }
