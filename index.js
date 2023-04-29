@@ -101,7 +101,7 @@ app.get("/stands", async(req, res) => {
     const getRows = await googleSheets.spreadsheets.values.get({
       auth,
       spreadsheetId,
-      range: "Standings!A:J",
+      range: "Standings!A:K",
     });
     let data = []
     for(let i = 1; i<await getRows.data.values.length; i++){
